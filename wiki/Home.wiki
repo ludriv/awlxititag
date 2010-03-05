@@ -8,7 +8,7 @@ This page explains how to use AWLXitiTag library.
 
 = Details =
 
-  * Add the following uses-permissions to your AndroidManifest.xml project file :
+  * Add the following uses-permissions to your {{{AndroidManifest.xml}}} project file :
     * {{{android.permission.INTERNET}}}
     * {{{android.permission.ACCESS_WIFI_STATE}}}
   * Download and unzip the package into your project src directory.
