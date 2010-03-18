@@ -138,6 +138,39 @@ public class XitiTag implements Runnable{
 		return instance;
 	}
 	
+	/** 
+	 * This method must be called to configure XitiTag before any other call.
+	 * @param context application or activity context
+	 * @param resource id of subdomain xiti subdomain. Identifies the server to call for Xiti stats. e.g: http://subd1.xiti.com , subdomain should be "subd1"
+	 * @param resource id of siteId id of the site
+	 * @param resource id of subsiteId id of the subsite.
+	 */
+	public static XitiTag init(Context context, int subdomainResId, int siteIdResId, int subsiteIdResId) {
+		
+		return init(context, 
+				context.getResources().getString(subdomainResId),
+				context.getResources().getString(siteIdResId),
+				context.getResources().getString(subsiteIdResId));
+		
+	}
+	
+	/** 
+	 * This method must be called to configure XitiTag before any other call.
+	 * @param context application or activity context
+	 * @param resource id of subdomain xiti subdomain. Identifies the server to call for Xiti stats. e.g: http://subd1.xiti.com , subdomain should be "subd1"
+	 * @param resource id of siteId id of the site
+	 */
+	public static XitiTag init(Context context, int subdomainResId, int siteIdResId) {
+			
+			return init(context, 
+					context.getResources().getString(subdomainResId),
+					context.getResources().getString(siteIdResId),
+					null);
+			
+		}
+	
+
+	
 	/**
 	 * This method must be called at the end of the life cycle of your activity or application
 	 * in order to stop the thread in charge of XitiTagOperations in operationQueue.
@@ -160,7 +193,7 @@ public class XitiTag implements Runnable{
 			throw new IllegalStateException("Xiti tag must be initialized before use.");
 		}
 		
-		instance.launchRequest("p="+page);
+		instance.launchRequest("p='"+page+"'");
 		
 	}
 	
@@ -174,7 +207,7 @@ public class XitiTag implements Runnable{
 			throw new IllegalStateException("Xiti tag must be initialized before use.");
 		}
 		
-		instance.launchRequest("p="+action+"&clic='"+stringForActionType(actionType)+"'");
+		instance.launchRequest("p='"+action+"'&clic='"+stringForActionType(actionType)+"'");
 		
 	}
 	
@@ -219,7 +252,7 @@ public class XitiTag implements Runnable{
 		
 		buf.append(subdomain)
 		   .append(".xiti.com/hit.xiti?s=").append(siteId)
-		   .append("&").append(URLEncoder.encode(toAppend));
+		   .append("&").append(toAppend);
 		
 		if ( subsiteId != null ) {
 			buf.append("&s2=").append(subsiteId);
