@@ -26,13 +26,23 @@ package com.awl.android.xiti;
 public class XitiTagOperation {
 	
 	private String operation;
+	private String subsiteId;
 	
 	public XitiTagOperation(String operation) {
+		this(operation, null);
+	}
+	
+	public XitiTagOperation(String operation, String subsiteId) {
 		this.operation = operation;
+		this.subsiteId = subsiteId;
 	}
 	
 	public String getOperation() {
 		return operation;
+	}
+
+	public String getSubsiteId() {
+		return subsiteId;
 	}
 
 }
