@@ -62,48 +62,48 @@ public class PhoneInformation extends HashMap<String,String>{
 		
 		// Current locale 
 		try {
-			this.put("lng", removeSpaces(Locale.getDefault().toString()));
+			this.put("lng", "["+removeSpaces(Locale.getDefault().toString())+"]");
 		} catch ( Throwable t ) {
 			Log.d(LOG_TAG, "PhoneInformation() Unable to get Locale");
 		}
 		
-		// Device model (e.g. GT-I5700)
+		// Device model (e.g. [SAMSUNG]-[GT-I9000])
 		try {
-			this.put("mdl", removeSpaces(Build.MODEL));
+			this.put("mfmd", "["+removeSpaces(Build.MANUFACTURER)+"]-["+removeSpaces(Build.MODEL)+"]");
 		} catch ( Throwable t ) {
 			Log.d(LOG_TAG, "PhoneInformation() Unable to get Model");
 		}
 		
-		// OS name + version (e.g. android-1.5)
+		// OS name + version (e.g. [android]-[1.5])
 		try {
-			this.put("os", removeSpaces("android-" + Build.VERSION.RELEASE));
+			this.put("os", "[android]-["+removeSpaces(Build.VERSION.RELEASE)+"]");
 		} catch ( Throwable t ) {
 			Log.d(LOG_TAG, "PhoneInformation() Unable to get os version");
 		}
 		
-		// Network connection type (Wifi/GSM)
+		// Network connection type (wifi/gsm)
 		try {
 			WifiManager wifiMgr = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
 			if ( wifiMgr.isWifiEnabled() ) {
-				this.put("tc", "wifi");
+				this.put("tc", "[wifi]");
 			} else {
-				this.put("tc", "gsm");
+				this.put("tc", "[gsm]");
 			}
 		} catch ( Throwable t ) {
 			Log.d(LOG_TAG, "PhoneInformation() Unable to get wifi state");
 		}
 		
-		// Application version
+		// Application version (e.g. [1.0])
 		try {
 			PackageInfo pkgInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-			this.put("apvr", removeSpaces(pkgInfo.versionName));
+			this.put("apvr", "["+removeSpaces(pkgInfo.versionName)+"]");
 		} catch ( Throwable t ) {
 			Log.d(LOG_TAG, "PhoneInformation() Unable to get application version");
 		}
 		
 		// Unique identifier
 		try {
-			this.put("idclient", removeSpaces(System.getString(context.getContentResolver(), System.ANDROID_ID)));
+			this.put("idclient", "["+removeSpaces(System.getString(context.getContentResolver(), System.ANDROID_ID))+"]");
 		} catch (Throwable t) {
 			Log.d(LOG_TAG, "PhoneInformation() Unable to get client id");
 		}
