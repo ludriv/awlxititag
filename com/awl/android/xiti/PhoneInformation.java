@@ -1,4 +1,4 @@
-// Copyright 2010 Atos Worldline
+﻿// Copyright 2010 Atos Worldline
 //
 // Inspired from Backelite bkxititag library for iPhone
 // Copyright 2009 Backelite
@@ -62,7 +62,7 @@ public class PhoneInformation extends HashMap<String,String>{
 		
 		// Current locale 
 		try {
-			this.put("lng", "["+removeSpaces(Locale.getDefault().toString())+"]");
+			this.put("lng", removeSpaces(Locale.getDefault().toString()));
 		} catch ( Throwable t ) {
 			Log.d(LOG_TAG, "PhoneInformation() Unable to get Locale");
 		}
@@ -85,9 +85,9 @@ public class PhoneInformation extends HashMap<String,String>{
 		try {
 			WifiManager wifiMgr = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
 			if ( wifiMgr.isWifiEnabled() ) {
-				this.put("tc", "[wifi]");
+				this.put("tc", "wifi");
 			} else {
-				this.put("tc", "[gsm]");
+				this.put("tc", "gsm");
 			}
 		} catch ( Throwable t ) {
 			Log.d(LOG_TAG, "PhoneInformation() Unable to get wifi state");
@@ -103,7 +103,7 @@ public class PhoneInformation extends HashMap<String,String>{
 		
 		// Unique identifier
 		try {
-			this.put("idclient", "["+removeSpaces(System.getString(context.getContentResolver(), System.ANDROID_ID))+"]");
+			this.put("idclient", removeSpaces(System.getString(context.getContentResolver(), System.ANDROID_ID)));
 		} catch (Throwable t) {
 			Log.d(LOG_TAG, "PhoneInformation() Unable to get client id");
 		}
@@ -117,19 +117,21 @@ public class PhoneInformation extends HashMap<String,String>{
 	 */
 	private String removeSpaces(String in) {
 		
-		if ( in == null ) {
+		if ( in == null ) 
+		{
 			return null;
-		} else if ( "".equals(in) ) {
+		}
+		else if (in.length()==0)
+		{
 			return in;
 		}
 		
-		// Removes spaces	
-		StringTokenizer st = new StringTokenizer(in," ",false);
-		StringBuffer t = new StringBuffer() ;
-		while (st.hasMoreElements()) t.append(st.nextElement());
-		
-		// Lower characters
-		return t.toString().toLowerCase();
+		return in.replace("-", "")
+				.replace(" ", "")
+				.replace("'", "")
+				.replace("’", "")
+				.replace("?", "")
+				.toLowerCase();
 		
 	}
 	

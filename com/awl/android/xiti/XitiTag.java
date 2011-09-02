@@ -460,7 +460,7 @@ public class XitiTag implements Runnable{
 				
 				doRequest(operation.getOperation());
 				
-			} catch (InterruptedException e) {} 
+			} catch (Throwable t) {} 
 			
 		}
 	}
@@ -471,16 +471,12 @@ public class XitiTag implements Runnable{
 	 */
 	private static void doRequest(String url) {
 		
-		final HttpClient httpClient  = new DefaultHttpClient();
-		final HttpGet httpGet = new HttpGet(url);
-
-		
 		try {
+			final HttpClient httpClient  = new DefaultHttpClient();
+			final HttpGet httpGet = new HttpGet(url);
 			httpClient.execute(httpGet);
-		} catch (ClientProtocolException e) {
-			Log.d(LOG_TAG, "XitiTag.doRequest("+url+") failed ! ", e);
-		} catch (IOException e) {
-			Log.d(LOG_TAG, "XitiTag.doRequest("+url+") failed ! ", e);
+		} catch (Throwable t) {
+			Log.d(LOG_TAG, "XitiTag.doRequest("+url+") failed ! ", t);
 		}
 			
 
@@ -488,11 +484,15 @@ public class XitiTag implements Runnable{
 	
 	public static String escapePageName(String dynamicPageName) {
 		
-		return sansAccent(dynamicPageName.replace(" ", "_")
-				.replace(" ", "_")
-				.replace("'", "_")
-				.replace("’", "_")
-				.replace("?", "_"));
-		
+		return sansAccent(dynamicPageName
+				.replace(" ", "")
+				.replace(" ", "")
+				.replace("-", "")
+				.replace("Â ", "")
+				.replace("'", "")
+				.replace("â€™", "")
+				.replace("’", "")
+				.replace("?", ""));
+
 	}
 }
